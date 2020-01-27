@@ -3,7 +3,7 @@ my friend tweeted a bunch of random characters
 so i thought it would be funny to make a program that would turn it
 into an acronym
 """
-import json, random, string
+import json, random, string, sys
 
 class word_cache(object):
     def __init__(self, corpus):
@@ -22,7 +22,11 @@ class word_cache(object):
             self.cache[letter] = things
         else:
             things = self.cache[letter]
-        return random.choice(things).capitalize()
+
+        try:
+            return random.choice(things).capitalize()
+        except Exception as e:
+            return letter
 
     def acronym_getter(self, acronym):
         """
@@ -32,7 +36,6 @@ class word_cache(object):
         final = ""
         for letter in acronym:
             final += self.get_word(letter) + " "
-
         return final
 
 def main():
@@ -41,10 +44,13 @@ def main():
 
     corpus = word_cache(corp)
 
-    x = input("enter acronym: \n>> ")
-    while x != 'stop':
-        print(corpus.acronym_getter(str(x)))
-        x = input("\nenter acronym: \n>> ")
+    if len(sys.argv) > 1:
+        print(corpus.acronym_getter(sys.argv[1]))
+    else:
+        x = input("enter acronym: \n>> ")
+        while x != 'stop':
+            print(corpus.acronym_getter(str(x)))
+            x = input("\nenter acronym: \n>> ")
 
 if __name__ == '__main__':
     main()
