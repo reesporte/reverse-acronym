@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 my friend tweeted a bunch of random characters
 so i thought it would be funny to make a program that would turn it
